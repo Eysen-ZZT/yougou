@@ -12,11 +12,34 @@
                 class="swiperImg"
             >
                 <swiper-item v-for="item in swiperImg " :key="item.goods_id">
-                    <navigator open-type="item.open_type" url="item.navigator_url">
+                    <navigator :open-type="item.open_type" :url="item.navigator_url">
                         <image :src="item.image_src" />
                     </navigator>
                 </swiper-item>
             </swiper>
+        </view>
+        <view class="cate">
+            <view class="catelist" v-for="item in cateImg" :key="item.name">
+                <navigator :open-type="item.open_type" :url="item.navigator_url">
+                    <image :src="item.image_src" />
+                </navigator>
+            </view>
+        </view>
+        <view class="floor" v-for="(item,index) in floorData" :key="index">
+            <view class="floor-title">
+                <image :src="item.floor_title.image_src" />
+            </view>
+            <view class="floor-cover">
+                <navigator
+                    class="cover-pic"
+                    :open-type="item2.open_type"
+                    :url="item2.navigator_url"
+                    v-for="item2 in item.product_list"
+                    :key="item2.name"
+                >
+                    <image :src="item2.image_src" />
+                </navigator>
+            </view>
         </view>
     </view>
 </template>
@@ -29,16 +52,40 @@ export default {
     },
     data() {
         return {
+            // 轮播图数据
             swiperImg: [],
+            // 导航分类数据
+            cateImg: [],
+            // 楼层数据
+            floorData: [],
         }
     },
     onLoad() {
+        // 轮播图数据
         uni.request({
             url:
                 "https://api-hmugo-web.itheima.net/api/public/v1/home/swiperdata",
             success: (res) => {
                 // console.log(res)
                 this.swiperImg = res.data.message
+            },
+        })
+        // 导航分类数据
+        uni.request({
+            url:
+                "https://api-hmugo-web.itheima.net/api/public/v1/home/catitems",
+            success: (res) => {
+                // console.log(res)
+                this.cateImg = res.data.message
+            },
+        })
+        // 楼层数据
+        uni.request({
+            url:
+                "https://api-hmugo-web.itheima.net/api/public/v1/home/floordata",
+            success: (res) => {
+                console.log(res)
+                this.floorData = res.data.message
             },
         })
     },
@@ -51,9 +98,55 @@ export default {
     .swiperImg {
         width: 750rpx;
         height: 340rpx;
+        box-shadow: 0px 1px 4px 1px rgba(200, 200, 200, 0.3);
         image {
             width: 750rpx;
             height: 340rpx;
+        }
+    }
+    .cate {
+        display: flex;
+        justify-content: space-around;
+        margin: 12rpx 0;
+        .catelist {
+            image {
+                width: 128rpx;
+                height: 140rpx;
+            }
+        }
+    }
+    .floor {
+        .floor-title {
+            margin-top: 43rpx;
+            image {
+                width: 750rpx;
+                height: 59rpx;
+            }
+        }
+        .floor-cover {
+            padding: 10rpx 11rpx 10rpx 12rpx;
+            overflow: hidden;
+            .cover-pic {
+                float: left;
+                width: 233rpx;
+                height: 188rpx;
+                margin-left: 15rpx;
+                margin-bottom: 10rpx;
+                image {
+                    width: 233rpx;
+                    height: 188rpx;
+                }
+                &:first-child {
+                    width: 233rpx;
+                    height: 386rpx;
+                    margin-left: 0;
+                    margin-bottom: 0;
+                    image {
+                        width: 233rpx;
+                        height: 386rpx;
+                    }
+                }
+            }
         }
     }
 }
