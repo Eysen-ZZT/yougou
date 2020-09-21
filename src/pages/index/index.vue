@@ -1,49 +1,60 @@
 <template>
-	<view class="content">
-		<image class="logo" src="/static/logo.png"></image>
-		<view>
-			<text class="title">{{title}}</text>
-		</view>
-	</view>
+    <view class="content">
+        <Search />
+        <view class="nav-Rotation">
+            <swiper
+                indicator-dots
+                indicator-color="#fff"
+                indicator-active-color="#FF2262"
+                autoplay
+                interval="2500"
+                circular
+                class="swiperImg"
+            >
+                <swiper-item v-for="item in swiperImg " :key="item.goods_id">
+                    <navigator open-type="item.open_type" url="item.navigator_url">
+                        <image :src="item.image_src" />
+                    </navigator>
+                </swiper-item>
+            </swiper>
+        </view>
+    </view>
 </template>
 
 <script>
-	export default {
-		data() {
-			return {
-				title: 'Hello'
-			}
-		},
-		onLoad() {
-
-		},
-		methods: {
-
-		}
-	}
+import Search from "../../components/search/Search.vue"
+export default {
+    components: {
+        Search,
+    },
+    data() {
+        return {
+            swiperImg: [],
+        }
+    },
+    onLoad() {
+        uni.request({
+            url:
+                "https://api-hmugo-web.itheima.net/api/public/v1/home/swiperdata",
+            success: (res) => {
+                // console.log(res)
+                this.swiperImg = res.data.message
+            },
+        })
+    },
+    methods: {},
+}
 </script>
 
-<style>
-	.content {
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		justify-content: center;
-	}
-
-	.logo {
-		height: 200rpx;
-		width: 200rpx;
-		margin: 200rpx auto 50rpx auto;
-	}
-
-	.text-area {
-		display: flex;
-		justify-content: center;
-	}
-
-	.title {
-		font-size: 36rpx;
-		color: #8f8f94;
-	}
+<style lang="less">
+.content {
+    .swiperImg {
+        width: 750rpx;
+        height: 340rpx;
+        image {
+            width: 750rpx;
+            height: 340rpx;
+        }
+    }
+}
 </style>
