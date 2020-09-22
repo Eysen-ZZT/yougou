@@ -1,6 +1,6 @@
 <template>
     <view class="search">
-        <input class="iptSearch" type="text" placeholder="秋季卫衣" />
+        <input class="iptSearch" type="text" placeholder="搜索" />
     </view>
 </template>
 
@@ -22,6 +22,7 @@ export default {}
         padding-left: 40rpx;
         border-radius: 40rpx;
         color: #666;
+        text-align: center;
     }
 }
 </style>

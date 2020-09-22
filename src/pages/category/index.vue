@@ -29,8 +29,14 @@
                             v-for="item3 in cateData[currentBar].children[index2].children"
                             :key="item3.cat_id"
                         >
-                            <image :src="item3.cat_icon" mode />
-                            <text>{{item3.cat_name}}</text>
+                            <navigator
+                                :url="`/pages/goods_list/index?cid=${item3.cat_id}`"
+                                navigate
+                                hover-class="className"
+                            >
+                                <image :src="item3.cat_icon" mode />
+                                <text>{{item3.cat_name}}</text>
+                            </navigator>
                         </view>
                     </view>
                 </view>
@@ -78,7 +84,7 @@ export default {
                 url:
                     "https://api-hmugo-web.itheima.net/api/public/v1/categories",
                 success: (res) => {
-                    // console.log(res)
+                    console.log(res)
                     // 商品分类数据
                     this.cateData = res.data.message
                     this.subCateData = [...res.data.message]
@@ -146,17 +152,19 @@ export default {
                     margin-bottom: 30rpx;
                     .subItem {
                         width: 33%;
-                        display: flex;
-                        flex-direction: column;
-                        justify-content: center;
-                        align-items: center;
                         padding: 10rpx 0;
+                        navigator {
+                            display: flex;
+                            flex-direction: column;
+                            justify-content: center;
+                            align-items: center;
+                        }
                         image {
                             width: 120rpx;
                             height: 120rpx;
                         }
                         text {
-                            font-size: 24rpx;
+                            font-size: 22rpx;
                             color: #2e2e2e;
                         }
                     }
