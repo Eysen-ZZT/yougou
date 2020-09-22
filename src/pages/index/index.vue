@@ -37,7 +37,7 @@
                     v-for="item2 in item.product_list"
                     :key="item2.name"
                 >
-                    <image :src="item2.image_src" />
+                    <image :src="item2.image_src" mode="heightFix" />
                 </navigator>
             </view>
         </view>
@@ -84,7 +84,7 @@ export default {
             url:
                 "https://api-hmugo-web.itheima.net/api/public/v1/home/floordata",
             success: (res) => {
-                console.log(res)
+                // console.log(res)
                 this.floorData = res.data.message
             },
         })
@@ -124,16 +124,14 @@ export default {
             }
         }
         .floor-cover {
-            padding: 10rpx 11rpx 10rpx 12rpx;
+            padding: 10rpx 11rpx 0 12rpx;
             overflow: hidden;
             .cover-pic {
                 float: left;
-                width: 233rpx;
                 height: 188rpx;
                 margin-left: 15rpx;
                 margin-bottom: 10rpx;
                 image {
-                    width: 233rpx;
                     height: 188rpx;
                 }
                 &:first-child {
