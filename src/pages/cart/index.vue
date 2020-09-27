@@ -24,14 +24,26 @@
                         item.goods_price == 0 ? "999" : item.goods_price
                     }}</view>
                     <view class="goods-count">
-                        <view class="minus btn">-</view>
+                        <view class="minus btn" @tap="handleMinus(index)"
+                            >-</view
+                        >
                         <view class="count">{{ item.goods_count }}</view>
-                        <view class="add btn">+</view>
+                        <view class="add btn" @tap="handleAdd(index)">+</view>
                     </view>
                 </view>
             </view>
         </view>
-        <view class="settlement">
+        <view class="empty" v-if="cartList.length <= 0">
+            <view class="top">购物车尽然是空的</view>
+            <view class="middle">再忙，也要记得买点什么犒赏自己~</view>
+            <navigator
+                url="/pages/index/index"
+                open-type="switchTab"
+                class="bottom"
+                >去逛逛</navigator
+            >
+        </view>
+        <view class="settlement" v-if="cartList.length > 0">
             <view class="checkBox">
                 <u-checkbox
                     v-model="isCheck"
@@ -49,7 +61,12 @@
                         >合计: <text>{{ allPrice }}</text>
                     </view>
                 </view>
-                <view class="goSettlement"> 去结算(5) </view>
+                <view
+                    @tap="goPay"
+                    :class="{ goSettlement: true, active: goodsNum !== 0 }"
+                    >去结算({{ goodsNum }})</view
+                >
+                <u-toast ref="uToast" />
             </view>
         </view>
     </view>
@@ -71,7 +88,9 @@ export default {
         this.cartList = uni.getStorageSync("cartList") || []
     },
     watch: {
+        // 监听列表商品数据变化
         cartList: {
+            // 深度监听子属性
             deep: true,
             handler: (value) => {
                 uni.setStorageSync("cartList", value)
@@ -79,6 +98,7 @@ export default {
         },
     },
     computed: {
+        // 计算商品总价格
         allPrice() {
             const priceArr = this.cartList.filter((item) => {
                 if (item.isSelect) {
@@ -91,11 +111,16 @@ export default {
             })
             return sum
         },
+        // 计算结算商品数量
+        goodsNum() {
+            const num = this.cartList.filter((item) => item.isSelect)
+            return num.length
+        },
     },
     methods: {
         // 单选
         handleSelect(index) {
-            console.log(index)
+            // console.log(index)
             this.cartList[index].isSelect = !this.cartList[index].isSelect
             // 判断全选是否选中
             const boo = this.cartList.every((item) => {
@@ -116,6 +141,44 @@ export default {
                 }
             })
         },
+        // 减少商品数量
+        handleMinus(index) {
+            if (this.cartList[index].goods_count <= 1) {
+                uni.showModal({
+                    title: "提示",
+                    content: "确认将这1个宝贝删除",
+                    cancelText: "我在想想",
+                    confirmText: "删除",
+                    success: (res) => {
+                        if (res.confirm) {
+                            console.log("用户点击确定")
+                            this.cartList.splice(index, 1)
+                        } else if (res.cancel) {
+                            console.log("用户点击取消")
+                        }
+                    },
+                })
+            } else {
+                this.cartList[index].goods_count--
+            }
+        },
+        // 添加商品数量
+        handleAdd(index) {
+            this.cartList[index].goods_count++
+        },
+        // 去结算
+        goPay() {
+            if (this.goodsNum == 0) {
+                this.$refs.uToast.show({
+                    title: "您还没有选择商品哦",
+                    icon: false,
+                })
+            } else {
+                uni.navigateTo({
+                    url: "/pages/pay/index",
+                })
+            }
+        },
     },
 }
 </script>
@@ -126,6 +189,7 @@ html {
 }
 .content {
     width: 750rpx;
+    min-height: 100vh;
     background-color: #f2f2f2;
     padding: 20rpx;
     padding-bottom: 103rpx;
@@ -224,8 +288,37 @@ html {
                 background-color: #ff2262;
                 border-radius: 26rpx;
                 line-height: 52rpx;
-                color: rgba($color: #fff, $alpha: 0.8);
+                color: rgba($color: #fff, $alpha: 0.5);
             }
+            .active {
+                color: rgba($color: #fff, $alpha: 1);
+            }
+        }
+    }
+    .empty {
+        height: 70vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        .top {
+            font-size: 34rpx;
+            color: #666;
+        }
+        .middle {
+            margin-top: 20rpx;
+            font-size: 22rpx;
+            color: #999;
+        }
+        .bottom {
+            margin-top: 20rpx;
+            width: 165rpx;
+            height: 70rpx;
+            text-align: center;
+            line-height: 66rpx;
+            border: 1px solid #ddd;
+            font-size: 28rpx;
+            color: #5f646e;
         }
     }
 }
