@@ -46,12 +46,16 @@
                                 item.goods_name
                             }}</view>
                             <view class="goods-price">{{
-                                item.goods_price
+                                item.goods_price == 0 ? "999" : item.goods_price
                             }}</view>
                         </view>
                     </navigator>
                 </view>
-                <u-loadmore :status="status" :load-text="loadText" />
+                <u-loadmore
+                    v-if="productData.length > 10"
+                    :status="status"
+                    :load-text="loadText"
+                />
             </scroll-view>
         </view>
     </view>
