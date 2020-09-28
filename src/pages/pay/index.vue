@@ -106,7 +106,101 @@ export default {
             })
         },
         // 去支付
-        goPay() {},
+        async goPay() {
+            uni.showLoading({
+                title: "加载中",
+            })
+            const token = uni.getStorageSync("token")
+            if (!token) {
+                uni.navigateTo({
+                    url: "/pages/auth/index",
+                })
+            } else {
+                console.log(token)
+                // 处理创建订单所需的参数
+                const order_price = this.allPrice
+                const consignee_addr = this.addressDetail
+                const goods = this.payList.map((item) => {
+                    return {
+                        goods_id: item.goods_id,
+                        goods_number: item.goods_count,
+                        goods_price: item.goods_price,
+                    }
+                })
+                const data = {
+                    order_price,
+                    consignee_addr,
+                    goods,
+                }
+                console.log(data)
+                // 发起创建订单请求
+                const res = await uni.request({
+                    url:
+                        "https://api-hmugo-web.itheima.net/api/public/v1/my/orders/create",
+                    data,
+                    method: "POST",
+                    header: {
+                        Authorization: token,
+                    },
+                })
+                console.log(res)
+                // 获取支付参数 生成预订单
+                const order_number = res[1].data.message.order_number
+                const res2 = await uni.request({
+                    url:
+                        "https://api-hmugo-web.itheima.net/api/public/v1/my/orders/req_unifiedorder",
+                    data: {
+                        order_number,
+                    },
+                    method: "POST",
+                    header: {
+                        Authorization: token,
+                    },
+                })
+                console.log(res2)
+                uni.hideLoading()
+                // 从预订单中提取微信支付接口需要的参数 调用微信接口
+                const pay = res2[1].data.message.pay
+                const res3 = await uni.requestPayment({
+                    ...pay,
+                })
+                console.log(res3)
+                // 支付完成之后查询支付状态
+                const res4 = await uni.request({
+                    url:
+                        "https://api-hmugo-web.itheima.net/api/public/v1/my/orders/chkOrder",
+                    data: {
+                        order_number,
+                    },
+                    method: "POST",
+                    header: {
+                        Authorization: token,
+                    },
+                })
+                console.log(res4)
+                if (res4[1].data.message) {
+                    this.$refs.uToast.show({
+                        title: res4[1].data.message,
+                        icon: false,
+                    })
+                    // 更新本地存储
+                    const oldCartList = uni.getStorageSync("cartList")
+                    const newCartList = oldCartList.filter(
+                        (item) => item.isSelect === false
+                    )
+                    uni.setStorageSync("cartList", newCartList)
+                    // 这里使用重定向是因为付款成功之后不允许用户再回到之前的付款页面
+                    uni.redirectTo({
+                        url: "/pages/order/index",
+                    })
+                } else {
+                    this.$refs.uToast.show({
+                        title: "支付失败",
+                        icon: false,
+                    })
+                }
+            }
+        },
     },
 }
 </script>
