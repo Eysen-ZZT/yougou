@@ -7,7 +7,6 @@
         >
             <view class="checkBox" @tap="handleSelect(index)">
                 <u-checkbox
-                    @tap="handleSelect(index)"
                     v-model="item.isSelect"
                     shape="circle"
                     active-color="#ff2262"
@@ -86,6 +85,7 @@ export default {
     // 显示购物车页面的时候需要使用最新的数据
     onShow() {
         this.cartList = uni.getStorageSync("cartList") || []
+        this.isCheckAll()
     },
     watch: {
         // 监听列表商品数据变化
@@ -118,11 +118,8 @@ export default {
         },
     },
     methods: {
-        // 单选
-        handleSelect(index) {
-            // console.log(index)
-            this.cartList[index].isSelect = !this.cartList[index].isSelect
-            // 判断全选是否选中
+        // 判断全选是否选中
+        isCheckAll() {
             const boo = this.cartList.every((item) => {
                 return item.isSelect
             })
@@ -131,6 +128,10 @@ export default {
             } else {
                 this.isCheck = false
             }
+        },
+        // 单选
+        handleSelect(index) {
+            this.isCheckAll()
         },
         // 全选
         checkAll() {

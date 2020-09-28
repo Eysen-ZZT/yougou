@@ -40,7 +40,9 @@
                     >合计: <text>{{ allPrice }}</text>
                 </view>
             </view>
-            <view class="goSettlement">去支付({{ goodsNum }})</view>
+            <view class="goSettlement" @tap="goPay"
+                >去支付({{ goodsNum }})</view
+            >
         </view>
         <u-toast ref="uToast" />
     </view>
@@ -103,6 +105,8 @@ export default {
                 },
             })
         },
+        // 去支付
+        goPay() {},
     },
 }
 </script>

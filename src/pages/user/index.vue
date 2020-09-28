@@ -1,49 +1,167 @@
 <template>
-	<view class="content">
-		<image class="logo" src="/static/logo.png"></image>
-		<view>
-			<text class="title">{{title}}</text>
-		</view>
-	</view>
+    <view class="content">
+        <view class="login">
+            <view class="loginBtn" @tap="getUserInfo" v-if="false">去登录</view>
+            <view class="userImg">
+                <image class="bgi" src="/static/logo.png" />
+                <view class="img">
+                    <image src="/static/logo.png" />
+                </view>
+            </view>
+        </view>
+        <view class="Order-status">
+            <view class="icon-item">
+                <u-icon name="coupon" color="#434343" size="64"></u-icon>
+                <view class="text">待付款</view>
+            </view>
+            <view class="icon-item"
+                ><u-icon name="car" color="#434343" size="64"></u-icon>
+                <view class="text">待收货</view>
+            </view>
+            <view class="icon-item"
+                ><u-icon name="rmb-circle" color="#434343" size="64"></u-icon>
+                <view class="text">退货/退款</view>
+            </view>
+            <view class="icon-item">
+                <u-icon name="order" color="#434343" size="64"></u-icon>
+                <view class="text">全部订单</view>
+            </view>
+        </view>
+        <view class="setItem-list">
+            <view class="setItem">
+                <view class="left">
+                    <u-icon
+                        name="kefu-ermai"
+                        color="#434343"
+                        size="45"
+                    ></u-icon>
+                    <view class="text">联系客服</view>
+                </view>
+                <view class="item-text">400-618-4000</view>
+            </view>
+            <view class="setItem">
+                <view class="left">
+                    <u-icon name="file-text" color="#434343" size="45"></u-icon>
+                    <view class="text">意见反馈</view>
+                </view>
+                <view class="item-text"></view>
+            </view>
+            <view class="setItem">
+                <view class="left">
+                    <u-icon
+                        name="info-circle"
+                        color="#434343"
+                        size="45"
+                    ></u-icon>
+                    <view class="text">当前版本</view>
+                </view>
+                <view class="item-text">v4.1.1</view>
+            </view>
+        </view>
+    </view>
 </template>
 
 <script>
-	export default {
-		data() {
-			return {
-				title: 'Hello'
-			}
-		},
-		onLoad() {
-
-		},
-		methods: {
-
-		}
-	}
+export default {
+    data() {
+        return {}
+    },
+    onLoad() {},
+    methods: {
+        getUserInfo() {},
+    },
+}
 </script>
 
-<style>
-	.content {
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		justify-content: center;
-	}
-
-	.logo {
-		height: 200rpx;
-		width: 200rpx;
-		margin: 200rpx auto 50rpx auto;
-	}
-
-	.text-area {
-		display: flex;
-		justify-content: center;
-	}
-
-	.title {
-		font-size: 36rpx;
-		color: #8f8f94;
-	}
+<style lang="scss">
+html {
+    height: 100%;
+}
+.content {
+    width: 750rpx;
+    min-height: 100vh;
+    background-color: #f2f2f2;
+    .login {
+        height: 349rpx;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        .loginBtn {
+            width: 352rpx;
+            height: 88rpx;
+            background-color: #07c160;
+            border-radius: 10rpx;
+            font-size: 34rpx;
+            color: #fff;
+            text-align: center;
+            line-height: 88rpx;
+        }
+        .userImg {
+            width: 750rpx;
+            height: 349rpx;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            .bgi {
+                position: absolute;
+                top: -10%;
+                left: -10%;
+                width: 120%;
+                height: 120%;
+                filter: blur(5px);
+            }
+            .img {
+                width: 172rpx;
+                height: 172rpx;
+                z-index: 99;
+                image {
+                    width: 172rpx;
+                    height: 172rpx;
+                    border-radius: 50%;
+                }
+            }
+        }
+    }
+    .Order-status {
+        margin: 20rpx;
+        height: 144rpx;
+        background-color: #fff;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        border-radius: 20rpx;
+        .icon-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            .text {
+                margin-top: 15rpx;
+            }
+        }
+    }
+    .setItem-list {
+        height: 520rpx;
+        margin: 20rpx;
+        background-color: #fff;
+        padding: 0 20rpx;
+        border-radius: 20rpx;
+        .setItem {
+            height: 101rpx;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2rpx solid #ddd;
+            color: #444;
+            padding: 0 10rpx;
+            .left {
+                width: 177rpx;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+        }
+    }
+}
 </style>
