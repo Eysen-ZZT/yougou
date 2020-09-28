@@ -15,7 +15,7 @@ export default {
     onLoad() {},
     methods: {
         async getUserInfo(e) {
-            // console.log(e.detail)
+            console.log(e.detail)
             // 获取登录请求数据
             const { iv, encryptedData, signature, rawData } = e.detail
             const res = await uni.login()
@@ -43,6 +43,7 @@ export default {
                     title: "登录成功",
                     icon: false,
                 })
+                uni.setStorageSync("userInfo", e.detail.userInfo)
                 setTimeout(() => {
                     uni.navigateBack()
                 }, 1000)

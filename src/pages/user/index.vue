@@ -1,15 +1,16 @@
 <template>
     <view class="content">
         <view class="login">
-            <navigator url="/pages/auth/index" class="loginBtn" v-if="true">
-                去登录
-            </navigator>
-            <view class="userImg" v-if="false">
-                <image class="bgi" src="/static/logo.png" />
+            <view class="userImg" v-if="userInfo">
+                <image class="bgi" :src="userInfo.avatarUrl" />
                 <view class="img">
-                    <image src="/static/logo.png" />
+                    <image :src="userInfo.avatarUrl" />
+                    <view class="nickName">{{ userInfo.nickName }}</view>
                 </view>
             </view>
+            <navigator url="/pages/auth/index" class="loginBtn" v-else>
+                去登录
+            </navigator>
         </view>
         <view class="Order-status">
             <view class="icon-item">
@@ -66,9 +67,16 @@
 <script>
 export default {
     data() {
-        return {}
+        return {
+            // 用户信息
+            userInfo: null,
+        }
     },
     onLoad() {},
+    onShow() {
+        this.userInfo = uni.getStorageSync("userInfo")
+        console.log(this.userInfo)
+    },
     methods: {},
 }
 </script>
@@ -103,7 +111,6 @@ html {
             overflow: hidden;
             display: flex;
             justify-content: center;
-            align-items: center;
             .bgi {
                 position: absolute;
                 top: -10%;
@@ -113,6 +120,7 @@ html {
                 filter: blur(5px);
             }
             .img {
+                margin-top: 58rpx;
                 width: 172rpx;
                 height: 172rpx;
                 z-index: 99;
@@ -120,6 +128,12 @@ html {
                     width: 172rpx;
                     height: 172rpx;
                     border-radius: 50%;
+                }
+                .nickName {
+                    margin-top: 16rpx;
+                    font-size: 32rpx;
+                    text-align: center;
+                    color: #fff;
                 }
             }
         }

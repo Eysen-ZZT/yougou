@@ -23,10 +23,29 @@ export default {
             current: 0,
         }
     },
-    onLoad() {},
+    onLoad() {
+        this.getOrderList()
+    },
     methods: {
+        // 获取全部订单列表
+        async getOrderList() {
+            const token = uni.getStorageSync("token")
+            const res = await uni.request({
+                url:
+                    "https://api-hmugo-web.itheima.net/api/public/v1/my/orders/all",
+                data: {
+                    type: this.current + 1,
+                },
+                header: {
+                    Authorization: token,
+                },
+            })
+            console.log(res)
+        },
+        // 切换类名
         handleClass(index) {
             this.current = index
+            this.getOrderList()
         },
     },
 }
