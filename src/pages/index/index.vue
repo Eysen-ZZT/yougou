@@ -11,8 +11,11 @@
                 circular
                 class="swiperImg"
             >
-                <swiper-item v-for="item in swiperImg " :key="item.goods_id">
-                    <navigator :open-type="item.open_type" :url="item.navigator_url">
+                <swiper-item v-for="item in swiperImg" :key="item.goods_id">
+                    <navigator
+                        :open-type="item.open_type"
+                        :url="item.navigator_url.replace(/main/, 'index')"
+                    >
                         <image :src="item.image_src" />
                     </navigator>
                 </swiper-item>
@@ -20,12 +23,17 @@
         </view>
         <view class="cate">
             <view class="catelist" v-for="item in cateImg" :key="item.name">
-                <navigator :open-type="item.open_type" :url="item.navigator_url">
+                <navigator
+                    :open-type="item.open_type"
+                    :url="item.navigator_url.replace(/main/, 'index')"
+                    v-if="item.navigator_url"
+                >
                     <image :src="item.image_src" />
                 </navigator>
+                <image :src="item.image_src" v-else />
             </view>
         </view>
-        <view class="floor" v-for="(item,index) in floorData" :key="index">
+        <view class="floor" v-for="(item, index) in floorData" :key="index">
             <view class="floor-title">
                 <image :src="item.floor_title.image_src" />
             </view>
@@ -33,7 +41,7 @@
                 <navigator
                     class="cover-pic"
                     :open-type="item2.open_type"
-                    :url="item2.navigator_url"
+                    :url="item2.navigator_url.replace(/[?]/, '/index?')"
                     v-for="item2 in item.product_list"
                     :key="item2.name"
                 >

@@ -69,8 +69,8 @@ export default {
     },
     data() {
         return {
-            // 分类id
-            cid: "",
+            // 分类参数
+            obj: {},
             // 排序选项
             options: ["综合", "销量", "价格"],
             // 控制选项类名
@@ -94,8 +94,9 @@ export default {
         }
     },
     onLoad(obj) {
+        // console.log(obj)
         // obj是从上一页面跳转传递过来的参数
-        this.cid = obj.cid
+        this.obj = obj
         this.getProductList()
     },
     // 监听该页面用户下拉刷新事件
@@ -115,7 +116,7 @@ export default {
                 url:
                     "https://api-hmugo-web.itheima.net/api/public/v1/goods/search", //仅为示例，并非真实接口地址。
                 data: {
-                    cid: this.cid,
+                    ...this.obj,
                     pagenum: this.pagenum,
                     pagesize: this.pagesize,
                 },
