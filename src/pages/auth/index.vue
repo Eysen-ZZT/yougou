@@ -1,49 +1,34 @@
 <template>
-	<view class="content">
-		<image class="logo" src="/static/logo.png"></image>
-		<view>
-			<text class="title">{{title}}</text>
-		</view>
-	</view>
+    <view class="content">
+        <button open-type="getUserInfo" @tap="getUserInfo" class="btn">
+            授权微信登录
+        </button>
+    </view>
 </template>
 
 <script>
-	export default {
-		data() {
-			return {
-				title: 'Hello'
-			}
-		},
-		onLoad() {
-
-		},
-		methods: {
-
-		}
-	}
+export default {
+    data() {
+        return {}
+    },
+    onLoad() {},
+    methods: {
+        getUserInfo() {},
+    },
+}
 </script>
 
-<style>
-	.content {
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		justify-content: center;
-	}
-
-	.logo {
-		height: 200rpx;
-		width: 200rpx;
-		margin: 200rpx auto 50rpx auto;
-	}
-
-	.text-area {
-		display: flex;
-		justify-content: center;
-	}
-
-	.title {
-		font-size: 36rpx;
-		color: #8f8f94;
-	}
+<style lang="scss">
+.content {
+    width: 750rpx;
+    height: 90vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    .btn {
+        width: 461rpx;
+        background-color: #07c160;
+        color: #fff;
+    }
+}
 </style>

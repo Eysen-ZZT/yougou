@@ -1,10 +1,11 @@
 <template>
     <view class="content">
-        <view
-            class="goods-item"
-            v-for="(item, index) in cartList"
-            :key="item.goods_id"
-        >
+        <!-- 
+            如果此处结构不使用key：index作为唯一值的话，
+            unshift新增的数据结构索引值则不会重新遍历 ，
+            那样后续选中商品对应的索引值则会出现bug
+        -->
+        <view class="goods-item" v-for="(item, index) in cartList" :key="index">
             <view class="checkBox" @tap="handleSelect(index)">
                 <u-checkbox
                     v-model="item.isSelect"

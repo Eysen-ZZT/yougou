@@ -1,49 +1,57 @@
 <template>
-	<view class="content">
-		<image class="logo" src="/static/logo.png"></image>
-		<view>
-			<text class="title">{{title}}</text>
-		</view>
-	</view>
+    <view class="content">
+        <view class="tabs">
+            <view
+                :class="{ 'tabs-item': true, active: current == index }"
+                v-for="(item, index) in tabs"
+                :key="index"
+                @click="handleClass(index)"
+                >{{ item }}</view
+            >
+        </view>
+        <view class="order-item-list">
+            <view class="order-item"> </view>
+        </view>
+    </view>
 </template>
 
 <script>
-	export default {
-		data() {
-			return {
-				title: 'Hello'
-			}
-		},
-		onLoad() {
-
-		},
-		methods: {
-
-		}
-	}
+export default {
+    data() {
+        return {
+            tabs: ["全部", "待付款", "待发货"],
+            current: 0,
+        }
+    },
+    onLoad() {},
+    methods: {
+        handleClass(index) {
+            this.current = index
+        },
+    },
+}
 </script>
 
-<style>
-	.content {
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		justify-content: center;
-	}
-
-	.logo {
-		height: 200rpx;
-		width: 200rpx;
-		margin: 200rpx auto 50rpx auto;
-	}
-
-	.text-area {
-		display: flex;
-		justify-content: center;
-	}
-
-	.title {
-		font-size: 36rpx;
-		color: #8f8f94;
-	}
+<style lang="scss">
+.content {
+    width: 750rpx;
+    .tabs {
+        height: 88rpx;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        background-color: #f2f2f2;
+        .tabs-item {
+            width: 184rpx;
+            height: 88rpx;
+            box-sizing: border-box;
+            border-bottom: 3rpx solid transparent;
+            text-align: center;
+            line-height: 88rpx;
+        }
+        .active {
+            border-bottom: 3rpx solid #ff2262;
+        }
+    }
+}
 </style>

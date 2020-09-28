@@ -1,8 +1,10 @@
 <template>
     <view class="content">
         <view class="login">
-            <view class="loginBtn" @tap="getUserInfo" v-if="false">去登录</view>
-            <view class="userImg">
+            <navigator url="/pages/auth/index" class="loginBtn" v-if="true">
+                去登录
+            </navigator>
+            <view class="userImg" v-if="false">
                 <image class="bgi" src="/static/logo.png" />
                 <view class="img">
                     <image src="/static/logo.png" />
@@ -22,10 +24,10 @@
                 ><u-icon name="rmb-circle" color="#434343" size="64"></u-icon>
                 <view class="text">退货/退款</view>
             </view>
-            <view class="icon-item">
+            <navigator url="/pages/order/index" class="icon-item">
                 <u-icon name="order" color="#434343" size="64"></u-icon>
                 <view class="text">全部订单</view>
-            </view>
+            </navigator>
         </view>
         <view class="setItem-list">
             <view class="setItem">
@@ -67,9 +69,7 @@ export default {
         return {}
     },
     onLoad() {},
-    methods: {
-        getUserInfo() {},
-    },
+    methods: {},
 }
 </script>
 
