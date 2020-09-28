@@ -70,14 +70,15 @@ export default {
     },
     onLoad() {
         // 轮播图数据
-        uni.request({
-            url:
-                "https://api-hmugo-web.itheima.net/api/public/v1/home/swiperdata",
-            success: (res) => {
-                // console.log(res)
-                this.swiperImg = res.data.message
-            },
-        })
+        // uni.request({
+        //     url:
+        //         "https://api-hmugo-web.itheima.net/api/public/v1/home/swiperdata",
+        //     success: (res) => {
+        //         // console.log(res)
+        //         this.swiperImg = res.data.message
+        //     },
+        // })
+        this.getswiperImg()
         // 导航分类数据
         uni.request({
             url:
@@ -97,7 +98,15 @@ export default {
             },
         })
     },
-    methods: {},
+    methods: {
+        async getswiperImg() {
+            const res = await this.$request({
+                url: "/home/swiperdata",
+            })
+            console.log(res)
+            this.swiperImg = res.data.message
+        },
+    },
 }
 </script>
 

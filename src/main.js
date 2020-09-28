@@ -1,6 +1,9 @@
 import Vue from 'vue'
 import App from './App'
 import uView from "uview-ui";
+import request from 'utils/request.js'
+
+Vue.prototype.$request = request
 
 Vue.use(uView);
 
