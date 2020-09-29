@@ -103,7 +103,7 @@ export default {
             const res = await this.$request({
                 url: "/home/swiperdata",
             })
-            console.log(res)
+            // console.log(res)
             this.swiperImg = res.data.message
         },
     },

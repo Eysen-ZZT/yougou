@@ -13,7 +13,7 @@
 
 const baseURL = 'https://api-hmugo-web.itheima.net/api/public/v1';
 const request = (config) => {
-    console.log(config);
+    // console.log(config);
     // 判断请求接口是否带有 /my/ 带有/my/ 的接口都需要在发送请求时携带token值 
     if (config.url.indexOf('/my/') > -1) {
         // 获取token
