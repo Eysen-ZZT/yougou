@@ -31,7 +31,7 @@
             </navigator>
         </view>
         <view class="setItem-list">
-            <view class="setItem">
+            <view class="setItem" @tap="phoneCall">
                 <view class="left">
                     <u-icon
                         name="kefu-ermai"
@@ -77,7 +77,13 @@ export default {
         this.userInfo = uni.getStorageSync("userInfo")
         console.log(this.userInfo)
     },
-    methods: {},
+    methods: {
+        phoneCall() {
+            uni.makePhoneCall({
+                phoneNumber: "400-618-4000",
+            })
+        },
+    },
 }
 </script>
 

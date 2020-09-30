@@ -28,6 +28,12 @@
                     new Date(1601312011 * 1000).toLocaleString()
                 }}</view>
             </view>
+            <view class="order-item">
+                <view class="item">支付状态</view>
+                <view class="item-text">{{
+                    item.pay_status == 0 ? "未支付" : "已支付"
+                }}</view>
+            </view>
         </view>
     </view>
 </template>
@@ -100,7 +106,7 @@ html {
         margin: 20rpx;
         background-color: #fff;
         border-radius: 20rpx;
-        height: 230rpx;
+        height: 260rpx;
         padding: 20rpx 20rpx;
         display: flex;
         flex-direction: column;

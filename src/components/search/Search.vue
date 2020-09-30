@@ -1,6 +1,8 @@
 <template>
     <view class="search">
-        <input class="iptSearch" type="text" placeholder="搜索" />
+        <navigator url="/pages/search/index" hover-class="none">
+            <input class="iptSearch" type="text" placeholder="搜索" />
+        </navigator>
     </view>
 </template>
 
@@ -15,9 +17,12 @@ export default {}
     align-items: center;
     background-color: #ff2262;
     height: 100rpx;
+    width: 750rpx;
+    navigator {
+        width: 95%;
+    }
     .iptSearch {
         background-color: #fff;
-        width: 90%;
         height: 80rpx;
         padding-left: 40rpx;
         border-radius: 40rpx;
